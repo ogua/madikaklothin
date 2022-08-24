@@ -21,7 +21,7 @@ return [
     */
     'logo' => [
 
-        'image' => '/vendor/laravel-admin/AdminLTE/img/AdminLTELogo.png',
+        'image' => '/images/software.png',
 
         'text' => '<span class="font-weight-bolder">Madika Klodin Gh</span>',
     ],
@@ -294,7 +294,7 @@ return [
     | This value is used to set the background image of login page.
     |
     */
-    'login_background_image' => '',
+    'login_background_image' => '/images/logo.jpg',
 
     /*
     |--------------------------------------------------------------------------

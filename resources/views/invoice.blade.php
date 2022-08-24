@@ -9,6 +9,8 @@
 
   <meta name="csrf-token" content="{{ csrf_token() }}" />
 
+  <link rel="shortcut icon" href="{{ URL::to('images/favicon.ico') }}">
+
   <!-- Bootstrap 3.3.7 -->
   <link rel="stylesheet" href="{{ URL::to('css/bootstrap.mins.css')}}">
   <!-- Font Awesome -->
@@ -32,15 +34,7 @@
         
         <h2 class="text-center">
 
-          @if(!empty(Admin::user()->school->logo))
-
-            <img width="100" height="100"src="{{ asset('storage') }}/{{ Admin::user()->school->logo }}"/>
-
-            @else
-
-            <img width="100" height="100"src="{{ URL::to('images/software.png') }}"/>
-
-            @endif
+         <img width="100" height="100"src="{{ URL::to('images/software.png') }}"/>
 
           MADIKA KLODIN GH
         </h2>
@@ -53,7 +47,7 @@
           OFFICIAL RECEIPT</p>
 
              <ul class="list-inline">
-              <li><b>CUSTOMER NAME:</b> {{$client->name}}</li>
+              <li><b>CUSTOMER NAME:</b> {{ strtoupper(strtoupper($client->name)) }}</li>
               <li class="pull-right"><b>INVOICE NO:</b> REF-{{$ivoiceid}}</li>
             </ul>
 
@@ -63,16 +57,16 @@
             </ul>
 
             <ul class="list-inline" style="margin-top: -10px;">
-              <li><b>being:</b> {{$narration}}</li>
+              <li><b>BEING:</b> {{ strtoupper(strtolower($narration)) }}</li>
               <li class="pull-right"><b>DATE:</b> {{date('d-m-Y')}}</b> </li>
             </ul>
 
             <ul class="list-inline" style="margin-top: -10px;">
-              <li><b>{{ __('Formfields.amntpaid') }}:</b> Gh¢ {{$tran->amount ?? 0}}</li>
+              <li><b>AMOUNT PAID:</b> Gh¢ {{$tran->amountpaid ?? 0}}</li>
               <li class="pull-right"><b>BALANCE:</b> {{ Admin::user()->school->currency ?? 'Gh¢' }} {{$balance ?? 0}}</li>
             </ul>
 
-            <p class="pull-right" style="margin-top: -10px;">{{ __('Formfields.signature') }}: ................................
+            <p class="pull-right" style="margin-top: 20px;">SIGNATURE: ................................
         <br>
         {{$tran->receivedby}}</p>
         <div class="clearfix"></div>
