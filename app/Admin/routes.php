@@ -21,6 +21,7 @@ Route::group([
 
      $router->resource('apprentices', measurement\ApprenticeController::class);
 
+     $router->resource('bridals-wear', measurement\BridalController::class);
 
      $router->get('/make-payment/{id}', 'measurement\DressblouseskirtController@makepayment');
 
@@ -38,6 +39,6 @@ Route::group([
 
      $router->get('/backup-restore-database', 'measurement\DressblouseskirtController@backuprestoredatabase');
 
-     $router->get('/backup-database', 'measurement\DressblouseskirtController@backupdatabase');
+     $router->get('/backup-database','measurement\DressblouseskirtController@backupdatabase');
 
 });
