@@ -506,7 +506,7 @@ public function backuprestoredatabase(Content $content)
 
 public function backupdatabase()
 {
-    $simpleBackup = SimpleBackup::setDatabase([env('DB_DATABASE'),env('DB_USERNAME'), '', env('DB_HOST')])->storeAfterExportTo('E:\test', 'backup'.date('m-d-Y'));
+    $simpleBackup = SimpleBackup::setDatabase([env('DB_DATABASE'),env('DB_USERNAME'), '', env('DB_HOST')])->storeAfterExportTo('D:\backup', 'backup'.date('m-d-Y'));
 
 
     admin_success('Database backup successful');

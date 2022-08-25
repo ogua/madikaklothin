@@ -231,8 +231,7 @@ class BridalController extends AdminController
         $form->text('tel', __('Tel'))->icon('fa-phone')->rules('required|min:10');
         $form->image('image',__('Customer Image'));
         $form->date('date', __('Date'));
-        $form->select('measurefor', __('Recording Measurement For'))
-        ->options(['Dress' => 'Dress', 'Blouse' => 'Blouse', 'Skirt' => 'Skirt'])->rules('required');
+        $form->text('measurefor', __('Description'))->rules('required');
         $form->text('busty1', __('Busty'));
         $form->text('busty2', __('Busty'));
         $form->text('waist', __('Waist'));
