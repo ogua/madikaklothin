@@ -103,9 +103,9 @@
                             <!-- /.col -->
                         </div>
 
-                        <div class="col-12">
+                        {{-- <div class="col-12">
                             <a href="/forgot-password">Forgot password ?</a>
-                        </div>
+                        </div> --}}
 
                     </form>
                 </div>

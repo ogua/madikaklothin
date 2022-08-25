@@ -27,7 +27,7 @@ class CreateDressblouseskirtsTable extends Migration
             $table->string('waist')->nullable();
             $table->string('underbust')->nullable();
             $table->string('shouldertowaist')->nullable();
-            $table->string('shouldertounder waist')->nullable();
+            $table->string('shouldertounderwaist')->nullable();
             $table->string('shouldertonipple1')->nullable();
             $table->string('shouldertonipple2')->nullable();
             $table->string('shouldertoKnee')->nullable();

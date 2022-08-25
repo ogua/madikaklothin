@@ -27,6 +27,10 @@ class TransactionController extends AdminController
         $table = new Table(new Transaction());
 
         //$table->column('id', __('Id'));
+        $table->column('invoice', __('Invoice #'))->display(function(){
+            return 'REF-'.$this->id;
+        });
+
         $table->column('client.name', __('Client name'));
         //$table->column('pay_id', __('Pay id'));
         $table->column('amountpaid', __('Amount paid'))->display(function(){
@@ -36,9 +40,15 @@ class TransactionController extends AdminController
             return 'GH&cent;'.$this->amountleft;
         });
         $table->column('reference', __('Reference'));
+
         $table->column('created_at', __('Created at'))->display(function($created_at){
             return date('m-d-Y',strtotime($created_at));
         });
+
+        $table->column('print', __('Print'))->display(function(){
+            return '<a href="/admin/print-receipt/'.$this->cat_id.'" target="_blank" class="btn btn-info"><i class="fas fa-print"></i></a>';
+        });
+
         //$table->column('updated_at', __('Updated at'));
 
         $table->disableCreateButton();

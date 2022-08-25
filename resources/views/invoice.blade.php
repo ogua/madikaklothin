@@ -25,12 +25,12 @@
 </head>
 <body onload="">
 
-  <div class="container">
+  <div class="container" style="">
 
     <div id="printhere">
       @if($tran)
 
-      <div class="col-md-8 col-md-offset-2" style="position:relative;">
+      <div class="col-md-8 col-md-offset-2" style="position:relative;background-image: url('/images/back-drop.png');">
         
         <h2 class="text-center">
 
@@ -38,8 +38,8 @@
 
           MADIKA KLODIN GH
         </h2>
-    
-          <p class="text-center">P.O.BOX ts 367 <br> XXXX XXX XXX <br> sch@email.com</p>
+          <p class="text-center" style="margin-top: -25px;">Tel: +(233) 67 087 5055 <br>
+          Location: Madina</p>
 
           {{-- p class="text-center">XXXX XXX XXX</p> 
           <p class="text-center">sch@email.com</p>  --}}

@@ -36,4 +36,8 @@ Route::group([
 
      $router->resource('transactions', measurement\TransactionController::class);
 
+     $router->get('/backup-restore-database', 'measurement\DressblouseskirtController@backuprestoredatabase');
+
+     $router->get('/backup-database', 'measurement\DressblouseskirtController@backupdatabase');
+
 });

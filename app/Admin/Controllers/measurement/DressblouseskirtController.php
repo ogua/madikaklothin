@@ -14,6 +14,7 @@ use Encore\Admin\Http\Controllers\AdminController;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
 use Encore\Admin\Table;
+use Coderatio\SimpleBackup\SimpleBackup;
 
 class DressblouseskirtController extends AdminController
 {
@@ -35,6 +36,19 @@ class DressblouseskirtController extends AdminController
         $table->model()->where('measuretype','DressBlouseSkirt');
         
         $table->column('id', __('Id'));
+
+        $table->column('image', __('Images'))->display(function($pic){
+                if (empty($pic)) {
+
+                    if ($this->gender == 'Male') {
+                    return '<img src="'.url()->to('images/male.png').'" style="max-width:50px;max-height:50px" class="img img-thumbnail">';
+                    }else{
+                        return '<img src="'.url()->to('images/female.png').'" style="max-width:50px;max-height:50px" class="img img-thumbnail">';
+                    }
+                }else{
+                    return '<img src="'.asset('storage').'/'.$pic.'" style="max-width:50px;max-height:50px" class="img img-thumbnail">';
+                }
+             });
         $table->column('name', __('Name'));
         $table->column('adrress', __('Adrress'));
         $table->column('tel', __('Tel'));
@@ -191,6 +205,14 @@ class DressblouseskirtController extends AdminController
         return $show;
     }
 
+
+    public function show($id, Content $content)
+    {
+        $data = Dressblouseskirt::where('id',$id)->first();
+
+        return $content->view('show',compact('data'));
+    }
+
     /**
      * Make a form builder.
      *
@@ -216,7 +238,7 @@ class DressblouseskirtController extends AdminController
         $form->text('waist', __('Waist'));
         $form->text('underbust', __('Under bust'));
         $form->text('shouldertowaist', __('Shoulder to waist'));
-        $form->text('shouldertounder waist', __('Shoulder to under  waist'));
+        $form->text('shouldertounderwaist', __('Shoulder to under  waist'));
         $form->text('shouldertonipple1', __('Shoulder to nipple'));
         $form->text('shouldertonipple2', __('Shoulder to nipple'));
         $form->text('shouldertoKnee', __('Shoulder to Knee'));
@@ -473,22 +495,26 @@ class DressblouseskirtController extends AdminController
    //dd($trans);
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
 
+
+
+public function backuprestoredatabase(Content $content)
+{
+    return $content->view('backup-restore');
+}
+
+public function backupdatabase()
+{
+    $simpleBackup = SimpleBackup::setDatabase([env('DB_DATABASE'),env('DB_USERNAME'), '', env('DB_HOST')])->storeAfterExportTo('E:\test', 'backup'.date('m-d-Y'));
+
+
+    admin_success('Database backup successful');
+
+    return Redirect()->back();
+
+    //secho $simpleBackup->getExportedName();
+}
 
 
 

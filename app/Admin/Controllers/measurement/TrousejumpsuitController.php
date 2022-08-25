@@ -7,6 +7,7 @@ use App\Admin\Actions\Pay;
 use App\Admin\Actions\Statusupdate;
 use App\Models\Dressblouseskirt;
 use App\Models\Payment;
+use Encore\Admin\Layout\Content;
 use App\Models\Transaction;
 use App\Models\Trousejumpsuit;
 use Encore\Admin\Form;
@@ -138,7 +139,7 @@ class TrousejumpsuitController extends AdminController
         $show->field('waisttoknee', __('Waist t oknee'));
         $show->field('waisttocalf', __('Waist to calf'));
         $show->field('waisttofloor', __('Waist to floor'));
-        $show->field('around knee', __('Around knee'));
+        $show->field('aroundknee', __('Around knee'));
         $show->field('thigh', __('Thigh'));
         $show->field('calf', __('Calf'));
         $show->field('ankle', __('Ankle'));
@@ -152,6 +153,13 @@ class TrousejumpsuitController extends AdminController
         $show->field('updated_at', __('Updated at'));
 
         return $show;
+    }
+
+    public function show($id, Content $content)
+    {
+        $data = Dressblouseskirt::where('id',$id)->first();
+
+        return $content->view('show-tr-suit',compact('data'));
     }
 
     /**
@@ -179,7 +187,7 @@ class TrousejumpsuitController extends AdminController
         $form->text('waisttoknee', __('Waist to knee'));
         $form->text('waisttocalf', __('Waist to calf'));
         $form->text('waisttofloor', __('Waist to floor'));
-        $form->text('around knee', __('Around knee'));
+        $form->text('aroundknee', __('Around knee'));
         $form->text('thigh', __('Thigh'));
         $form->text('calf', __('Calf'));
         $form->text('ankle', __('Ankle'));
