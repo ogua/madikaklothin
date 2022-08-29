@@ -241,7 +241,7 @@ class DressblouseskirtController extends AdminController
         $form->text('measurement.waist', __('Waist'));
         $form->text('measurement.underbust', __('Under bust'));
         $form->text('measurement.shouldertowaist', __('Shoulder to waist'));
-        $form->text('measurement.shouldertounderwaist', __('Shoulder to under  waist'));
+        $form->text('measurement.shouldertounderwaist', __('Shoulder to under  bust'));
         $form->text('measurement.shouldertonipple1', __('Shoulder to nipple'));
         $form->text('measurement.shouldertonipple2', __('Shoulder to nipple'));
         $form->text('measurement.shouldertoKnee', __('Shoulder to Knee'));
@@ -249,7 +249,7 @@ class DressblouseskirtController extends AdminController
         $form->text('measurement.waisttohip', __('Waist to hip'));
         $form->text('measurement.waisttoknee', __('Waist to knee'));
         $form->text('measurement.waisttofloor', __('Waist to floor'));
-        $form->text('measurement.kneetofloor', __('Kneet of loor'));
+        $form->text('measurement.kneetofloor', __('Kneet of floor'));
         $form->text('measurement.nipppletonipple', __('Nippple to nipple'));
         $form->text('measurement.aroundarm', __('Around arm'));
         $form->text('measurement.sleeevelength', __('Sleeeve length'));
