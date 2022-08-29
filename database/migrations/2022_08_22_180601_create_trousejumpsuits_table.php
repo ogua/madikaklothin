@@ -15,7 +15,7 @@ class CreateTrousejumpsuitsTable extends Migration
     {
         Schema::create('trousejumpsuits', function (Blueprint $table) {
             $table->increments('id');
-            $$table->string('client_id')->nullable();
+            $table->string('client_id')->nullable();
             $table->string('date')->nullable();
             $table->string('measuretype')->nullable();
             $table->string('waist')->nullable();
