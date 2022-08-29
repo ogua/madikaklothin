@@ -299,7 +299,7 @@ class BridalController extends AdminController
             ]);
 
 
-            return Redirect()->to('/admin/transactions');
+            return Redirect()->to('/admin/make-payment');
         }
 
 
@@ -316,7 +316,7 @@ class BridalController extends AdminController
             $tr->reference = 'Paying For '.$form->measurement['measurefor'];
             $tr->save();
 
-            return Redirect()->to('/admin/transactions');
+            return Redirect()->to('/admin/make-payment');
 
         }
 
