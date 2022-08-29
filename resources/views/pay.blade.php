@@ -51,7 +51,7 @@
 
       swal({
         title: "Are You Sure ?",
-        text: "Record Payment Of Gh¢"+paynow+' For '+clientname,
+        text: "Record Payment Of Gh¢"+paynow,
         icon: "warning",
         buttons: ['Cancel', 'Record Payment'],
         dangerMode: true,
