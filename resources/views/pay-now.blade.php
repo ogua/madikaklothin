@@ -64,7 +64,6 @@
     $(document).on("submit","#recordpay", function(e){
       e.preventDefault();
       var paynow = $("#paynow").val();
-      var clientname = $("#clientname").val();
       var clientid = $("#clientid").val();
 
     
@@ -79,7 +78,7 @@
 
       swal({
         title: "Are You Sure ?",
-        text: "Record Payment Of Gh¢"+paynow+' For '+clientname,
+        text: "Record Payment Of Gh¢"+paynow,
         icon: "warning",
         buttons: ['Cancel', 'Record Payment'],
         dangerMode: true,

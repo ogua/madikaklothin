@@ -299,7 +299,7 @@ class DressblouseskirtController extends AdminController
             ]);
 
 
-            return Redirect()->to('/admin/make-payment');
+            return Redirect()->to('/admin/make-payment/'.$id);
         }
 
 
@@ -317,7 +317,7 @@ class DressblouseskirtController extends AdminController
             $tr->reference = 'Paying For '.$form->measurement['measurefor'];
             $tr->save();
 
-            return Redirect()->to('/admin/make-payment');
+            return Redirect()->to('/admin/make-payment/'.$id);
 
         }
 

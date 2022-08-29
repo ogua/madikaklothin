@@ -234,7 +234,7 @@ class TrousejumpsuitController extends AdminController
             ]);
 
 
-            return Redirect()->to('/admin/make-payment');
+            return Redirect()->to('/admin/make-payment/'.$id);
         }
 
 
@@ -252,7 +252,7 @@ class TrousejumpsuitController extends AdminController
             $tr->reference = 'Paying For '.$form->measurement['measurefor'];
             $tr->save();
 
-            return Redirect()->to('/admin/make-payment');
+            return Redirect()->to('/admin/make-payment/'.$id);
 
         }
 

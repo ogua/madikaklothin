@@ -35,7 +35,8 @@
     $(document).on("submit","#recordpay", function(e){
       e.preventDefault();
       var paynow = $("#paynow").val();
-      var clientname = $("#clientname").val();
+      //var clientname = $("#clientname").val();
+      var clientname = '{{ $client->client->name }}';
       var clientid = $("#clientid").val();
 
     
