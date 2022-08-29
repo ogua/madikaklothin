@@ -292,6 +292,7 @@ class BridalController extends AdminController
 
             Transaction::create([
                 'cat_id' => $id,
+                'amountcharge' => $form->payment['amountcharge'],
                 'amountpaid' => $form->payment['amountpaid'],
                 'amountleft' => $left,
                 'reference' => 'Paying For '.$form->measurement['measurefor'],
@@ -312,6 +313,7 @@ class BridalController extends AdminController
 
             $tr = Transaction::where('pay_id',$update->id)->first();
             $tr->amountpaid = $form->payment['amountpaid'];
+            $tr->amountcharge = $form->payment['amountcharge'];
             $tr->amountleft = $left;
             $tr->reference = 'Paying For '.$form->measurement['measurefor'];
             $tr->save();

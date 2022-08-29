@@ -35,6 +35,10 @@ class TransactionController extends AdminController
             return $this->client->client['name'];
         });
         //$table->column('pay_id', __('Pay id'));
+        
+        $table->column('amountcharge', __('Amount charged'))->display(function(){
+            return 'GH&cent;'.$this->amountcharge;
+        });
         $table->column('amountpaid', __('Amount paid'))->display(function(){
             return 'GH&cent;'.$this->amountpaid;
         });

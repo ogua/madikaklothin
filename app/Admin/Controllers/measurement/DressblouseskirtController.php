@@ -291,6 +291,7 @@ class DressblouseskirtController extends AdminController
 
             Transaction::create([
                 'cat_id' => $id,
+                'amountcharge' => $form->payment['amountcharge'],
                 'amountpaid' => $form->payment['amountpaid'],
                 'amountleft' => $left,
                 'reference' => 'Paying For '.$form->measurement['measurefor'],
@@ -310,6 +311,7 @@ class DressblouseskirtController extends AdminController
             $update->save();
 
             $tr = Transaction::where('pay_id',$update->id)->first();
+            $tr->amountcharge = $form->payment['amountcharge'];
             $tr->amountpaid = $form->payment['amountpaid'];
             $tr->amountleft = $left;
             $tr->reference = 'Paying For '.$form->measurement['measurefor'];

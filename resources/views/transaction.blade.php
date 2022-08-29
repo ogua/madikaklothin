@@ -18,6 +18,7 @@
 					<tr>
 						<th>ID</th>
 						<th>Client name</th>
+						<th>Charged</th>
 						<th>Paid</th>
 						<th>Left</th>
 						<th>Reference</th>
@@ -31,6 +32,7 @@
 					<tr>
 						<td>{{ $loop->iteration }}</td>
 						<td>{{ $client->client->name }}</td>
+						<td>GH&cent; {{ $row->amountcharge }}</td>
 						<td>GH&cent; {{ $row->amountpaid }}</td>
 						<td>GH&cent; {{ $row->amountleft }}</td>
 						<td>{{ $row->reference }}</td>
