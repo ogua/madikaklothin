@@ -3,18 +3,20 @@
 namespace App\Admin\Controllers\measurement;
 
 use App\Admin\Actions\Mytransaction;
+use App\Admin\Actions\Newrecord;
 use App\Admin\Actions\Pay;
 use App\Admin\Actions\Statusupdate;
+use App\Models\Clients;
 use App\Models\Dressblouseskirt;
 use App\Models\Payment;
 use App\Models\Transaction;
+use Coderatio\SimpleBackup\SimpleBackup;
 use Encore\Admin\Form;
-use Illuminate\Http\Request;
 use Encore\Admin\Http\Controllers\AdminController;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
 use Encore\Admin\Table;
-use Coderatio\SimpleBackup\SimpleBackup;
+use Illuminate\Http\Request;
 
 class DressblouseskirtController extends AdminController
 {
@@ -37,7 +39,7 @@ class DressblouseskirtController extends AdminController
         
         $table->column('id', __('Id'));
 
-        $table->column('image', __('Images'))->display(function($pic){
+        $table->column('client.image', __('Images'))->display(function($pic){
                 if (empty($pic)) {
 
                     if ($this->gender == 'Male') {
@@ -49,22 +51,22 @@ class DressblouseskirtController extends AdminController
                     return '<img src="'.asset('storage').'/'.$pic.'" style="max-width:50px;max-height:50px" class="img img-thumbnail">';
                 }
              });
-        $table->column('name', __('Name'));
-        $table->column('adrress', __('Adrress'));
-        $table->column('tel', __('Tel'));
+        $table->column('client.name', __('Name'));
+        $table->column('client.adrress', __('Adrress'));
+        $table->column('client.tel', __('Tel'));
         $table->column('date', __('Date'));
 
-       $table->column('payment.amountcharge', __('Amount Charge'))
+       $table->column('amountcharge', __('Amount Charge'))
         ->display(function(){
-            return 'GH&cent;'.$this->payment->amountcharge;
+            return 'GH&cent;'.$this->client->payment['amountcharge'];
         });
 
-        $table->column('payment.amountpaid', __('Amount Paid'))->display(function(){
-            return 'GH&cent;'.$this->payment->amountpaid;
+        $table->column('amountpaid', __('Amount Paid'))->display(function(){
+            return 'GH&cent;'.$this->client->payment['amountpaid'];
         });
 
-        $table->column('payment.amountleft', __('Amount Left'))->display(function(){
-            return 'GH&cent;'.$this->payment->amountleft;
+        $table->column('amountleft', __('Amount Left'))->display(function(){
+            return 'GH&cent;'.$this->client->payment['amountleft'];
         });
 
         $table->column('status', __('status'))->hide();
@@ -132,11 +134,10 @@ class DressblouseskirtController extends AdminController
 
            // $filter->expand();
 
-            $filter->equal('name',__('Search Name'))->select(Dressblouseskirt::select('name','id')
-                ->where('measuretype','DressBlouseSkirt')
-                ->distinct()->pluck('name','name'));
+            $filter->equal('client.name',__('Search Name'))->select(Clients::select('name','id')
+                ->pluck('name','name'));
 
-            $filter->equal('phone',__('Phone'));
+            $filter->equal('client.tel',__('Phone'));
 
         });
 
@@ -144,6 +145,7 @@ class DressblouseskirtController extends AdminController
         $table->actions(function($actions){
             $actions->add(new Statusupdate());
             $actions->add(new Mytransaction());
+            $actions->add(new Newrecord());
             $actions->add(new Pay());
             $actions->disableDelete();
             
@@ -155,12 +157,13 @@ class DressblouseskirtController extends AdminController
     /**
      * Make a show builder.
      *
+     * 
      * @param mixed $id
      * @return Show
      */
     protected function detail($id)
     {
-        $show = new Show(Dressblouseskirt::findOrFail($id));
+        $show = new Show(Clients::findOrFail($id));
 
         //$show->field('id', __('Id'));
         $show->field('image', __('Image'))->image();
@@ -220,54 +223,54 @@ class DressblouseskirtController extends AdminController
      */
     protected function form()
     {
-        $form = new Form(new Dressblouseskirt());
+        $form = new Form(new Clients());
 
         $form->tab(__('Measurement'), function ($form) {
 
-        $form->hidden('measuretype')->value('DressBlouseSkirt');
+        $form->hidden('measurement.measuretype')->value('DressBlouseSkirt');
 
         $form->text('name', __('FullName'))->rules('required');
         $form->textarea('adrress', __('Addrress'));
         $form->text('tel', __('Tel'))->icon('fa-phone')->rules('required|min:10');
         $form->image('image',__('Customer Image'));
-        $form->date('date', __('Date'));
-        $form->select('measurefor', __('Recording Measurement For'))
+        $form->date('measurement.date', __('Date'));
+        $form->select('measurement.measurefor', __('Recording Measurement For'))
         ->options(['Dress' => 'Dress', 'Blouse' => 'Blouse', 'Skirt' => 'Skirt'])->rules('required');
-        $form->text('busty1', __('Busty'));
-        $form->text('busty2', __('Busty'));
-        $form->text('waist', __('Waist'));
-        $form->text('underbust', __('Under bust'));
-        $form->text('shouldertowaist', __('Shoulder to waist'));
-        $form->text('shouldertounderwaist', __('Shoulder to under  waist'));
-        $form->text('shouldertonipple1', __('Shoulder to nipple'));
-        $form->text('shouldertonipple2', __('Shoulder to nipple'));
-        $form->text('shouldertoKnee', __('Shoulder to Knee'));
-        $form->text('shouldertohip', __('Shoulder to hip'));
-        $form->text('waisttohip', __('Waist to hip'));
-        $form->text('waisttoknee', __('Waist to knee'));
-        $form->text('waisttofloor', __('Waist to floor'));
-        $form->text('kneetofloor', __('Kneet of loor'));
-        $form->text('nipppletonipple', __('Nippple to nipple'));
-        $form->text('aroundarm', __('Around arm'));
-        $form->text('sleeevelength', __('Sleeeve length'));
-        $form->text('shortdress', __('Short dress'));
-        $form->text('longdress', __('Long dress'));
-        $form->text('mididress', __('Midi dress'));
-        $form->text('blouselength', __('Blouse length'));
-        $form->text('skirtlength', __('Skirt length'));
-        $form->text('slitlength', __('Slit length'));
-        $form->text('hip', __('Hip'));
-        $form->text('fulllength', __('Full length'));
-        $form->text('acrosschest', __('Across chest'));
-        $form->text('acrossback', __('Across back'));
-        $form->text('neck', __('Neck'));
-        $form->text('offshoulder', __('Off shoulder'));
-        $form->text('aroundknee', __('Around knee'));
+        $form->text('measurement.busty1', __('Busty'));
+        $form->text('measurement.busty2', __('Busty'));
+        $form->text('measurement.waist', __('Waist'));
+        $form->text('measurement.underbust', __('Under bust'));
+        $form->text('measurement.shouldertowaist', __('Shoulder to waist'));
+        $form->text('measurement.shouldertounderwaist', __('Shoulder to under  waist'));
+        $form->text('measurement.shouldertonipple1', __('Shoulder to nipple'));
+        $form->text('measurement.shouldertonipple2', __('Shoulder to nipple'));
+        $form->text('measurement.shouldertoKnee', __('Shoulder to Knee'));
+        $form->text('measurement.shouldertohip', __('Shoulder to hip'));
+        $form->text('measurement.waisttohip', __('Waist to hip'));
+        $form->text('measurement.waisttoknee', __('Waist to knee'));
+        $form->text('measurement.waisttofloor', __('Waist to floor'));
+        $form->text('measurement.kneetofloor', __('Kneet of loor'));
+        $form->text('measurement.nipppletonipple', __('Nippple to nipple'));
+        $form->text('measurement.aroundarm', __('Around arm'));
+        $form->text('measurement.sleeevelength', __('Sleeeve length'));
+        $form->text('measurement.shortdress', __('Short dress'));
+        $form->text('measurement.longdress', __('Long dress'));
+        $form->text('measurement.mididress', __('Midi dress'));
+        $form->text('measurement.blouselength', __('Blouse length'));
+        $form->text('measurement.skirtlength', __('Skirt length'));
+        $form->text('measurement.slitlength', __('Slit length'));
+        $form->text('measurement.hip', __('Hip'));
+        $form->text('measurement.fulllength', __('Full length'));
+        $form->text('measurement.acrosschest', __('Across chest'));
+        $form->text('measurement.acrossback', __('Across back'));
+        $form->text('measurement.neck', __('Neck'));
+        $form->text('measurement.offshoulder', __('Off shoulder'));
+        $form->text('measurement.aroundknee', __('Around knee'));
         //$form->number('status', __('Status'));
 
     })->tab('Payment Information', function ($form){
         $form->text('payment.amountcharge', __('Amount Charge'))->rules('required');
-        $form->text('payment.amountpaid', __('Amount Paid'))->rules('required');
+        $form->hidden('payment.amountpaid', __('Amount Paid'))->value(0);
         ///$form->hidden('payment.amountleft', __('Amount Paid'));
             
     });
@@ -290,12 +293,12 @@ class DressblouseskirtController extends AdminController
                 'cat_id' => $id,
                 'amountpaid' => $form->payment['amountpaid'],
                 'amountleft' => $left,
-                'reference' => 'Paying For '.$form->measurefor,
+                'reference' => 'Paying For '.$form->measurement['measurefor'],
                 'pay_id' => $update->id
             ]);
 
 
-            return Redirect()->to('/admin/print-receipt/'.$id);
+            return Redirect()->to('/admin/transactions');
         }
 
 
@@ -309,10 +312,10 @@ class DressblouseskirtController extends AdminController
             $tr = Transaction::where('pay_id',$update->id)->first();
             $tr->amountpaid = $form->payment['amountpaid'];
             $tr->amountleft = $left;
-            $tr->reference = 'Paying For '.$form->measurefor;
+            $tr->reference = 'Paying For '.$form->measurement['measurefor'];
             $tr->save();
 
-            return Redirect()->to('/admin/print-receipt/'.$id);
+            return Redirect()->to('/admin/transactions');
 
         }
 
@@ -330,7 +333,7 @@ class DressblouseskirtController extends AdminController
 
         $tr = Transaction::where('cat_id',$id)->get();
 
-        return $content->title('Transactions For '.$client->name)
+        return $content->title('Transactions For '.$client->client->name)
         ->view('transaction',compact('tr','client'));
     }
 
@@ -339,14 +342,14 @@ class DressblouseskirtController extends AdminController
     {
        $client = Dressblouseskirt::where('id',$id)->first();
 
-        return $content->title('Record Payment For '.$client->name)
+        return $content->title('Record Payment For '.$client->client->name)
         ->view('pay',compact('client'));
     }
 
 
     public function umakepayment(Content $content)
     {
-        $client = Dressblouseskirt::latest()->limit(50)->get();
+        $client = Clients::latest()->limit(50)->get();
 
         return $content->title('Record Payment')
         ->view('pay-now',compact('client'));

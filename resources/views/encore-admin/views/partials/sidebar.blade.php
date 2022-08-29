@@ -21,9 +21,74 @@
         <!-- Sidebar Menu -->
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                @each('admin::partials.menu', Admin::menu(), 'item')
-            </ul>
-        </nav>
+                <li class="nav-item">
+                   <a href="http://madikaklodingh.com/admin" class="nav-link">
+                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                    <p>Dashboard</p>
+                </a>
+            </li>
+            <li class="nav-item">
+               <a href="http://madikaklodingh.com/admin/auth/users" class="nav-link">
+                <i class="nav-icon fas fa-users"></i>
+                <p>Users</p>
+            </a>
+        </li>
+        {{-- <li class="nav-item">
+           <a href="http://madikaklodingh.com/admin/auth/menu" class="nav-link">
+            <i class="nav-icon fas fa-bars"></i>
+            <p>Menu</p>
+        </a>
+    </li> --}}
+    <li class="nav-item">
+       <a href="http://madikaklodingh.com/admin/employees" class="nav-link">
+        <i class="nav-icon fas fa-user-alt"></i>
+        <p>Employees</p>
+    </a>
+</li>
+<li class="nav-item">
+   <a href="http://madikaklodingh.com/admin/apprentices" class="nav-link">
+    <i class="nav-icon fas fa-user-alt-slash"></i>
+    <p>Apprentices</p>
+</a>
+</li>
+<li class="nav-item">
+   <a href="http://madikaklodingh.com/admin/dress-blouse-skirts" class="nav-link active">
+    <i class="nav-icon far fa-hand-scissors"></i>
+    <p>Dress / Blouse / Skirt</p>
+</a>
+</li>
+<li class="nav-item">
+   <a href="http://madikaklodingh.com/admin/bridals-wear" class="nav-link">
+    <i class="nav-icon far fa-hand-scissors"></i>
+    <p>bridals  wear</p>
+</a>
+</li>
+<li class="nav-item">
+   <a href="http://madikaklodingh.com/admin/trouser-jumpsuits" class="nav-link">
+    <i class="nav-icon far fa-hand-scissors"></i>
+    <p>Trouser / Jumpsuit</p>
+</a>
+</li>
+<li class="nav-item">
+   <a href="http://madikaklodingh.com/admin/make-payment" class="nav-link">
+    <i class="nav-icon fas fa-file-invoice-dollar"></i>
+    <p>Record Payment</p>
+</a>
+</li>
+<li class="nav-item">
+   <a href="http://madikaklodingh.com/admin/transactions" class="nav-link">
+    <i class="nav-icon fas fa-comment-dollar"></i>
+    <p>Transactions</p>
+</a>
+</li>
+<li class="nav-item">
+   <a href="http://madikaklodingh.com/admin/backup-restore-database" class="nav-link">
+    <i class="nav-icon fas fa-download"></i>
+    <p>Backup</p>
+</a>
+</li>
+</ul>
+</nav>
         <!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->

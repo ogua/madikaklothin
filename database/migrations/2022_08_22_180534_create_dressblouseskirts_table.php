@@ -15,10 +15,7 @@ class CreateDressblouseskirtsTable extends Migration
     {
         Schema::create('dressblouseskirts', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('image')->nullable();
-            $table->string('name')->nullable();
-            $table->string('adrress')->nullable();
-            $table->string('tel')->nullable();
+            $table->string('client_id')->nullable();
             $table->string('date')->nullable();
             $table->string('measuretype')->nullable();
             $table->string('measurefor')->nullable();

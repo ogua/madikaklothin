@@ -31,7 +31,9 @@ class TransactionController extends AdminController
             return 'REF-'.$this->id;
         });
 
-        $table->column('client.name', __('Client name'));
+        $table->column('clientname', __('Client name'))->display(function(){
+            return $this->client->client['name'];
+        });
         //$table->column('pay_id', __('Pay id'));
         $table->column('amountpaid', __('Amount paid'))->display(function(){
             return 'GH&cent;'.$this->amountpaid;

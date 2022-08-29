@@ -21,6 +21,7 @@
 						<th>Paid</th>
 						<th>Left</th>
 						<th>Reference</th>
+						<th>Print</th>
 						<th>Created</th>
 					</tr>
 				</thead>
@@ -29,10 +30,11 @@
 					@foreach($tr as $row)
 					<tr>
 						<td>{{ $loop->iteration }}</td>
-						<td>{{ $client->name }}</td>
+						<td>{{ $client->client->name }}</td>
 						<td>GH&cent; {{ $row->amountpaid }}</td>
 						<td>GH&cent; {{ $row->amountleft }}</td>
 						<td>{{ $row->reference }}</td>
+						<td><a href="/admin/print-receipt/{{ $row->cat_id }}" target="_blank" class="btn btn-info"><i class="fas fa-print"></i></a></td>
 						<td>{{ date('M-d-Y', strtotime($row->created_at)) }}</td>
 					</tr>
 					@endforeach

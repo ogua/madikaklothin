@@ -11,7 +11,7 @@ return [
     | login page.
     |
     */
-    'name' => 'Madika Klodin Gh',
+    'name' => 'Madika Klodin',
 
     /*
     |--------------------------------------------------------------------------
@@ -23,7 +23,7 @@ return [
 
         'image' => '/images/software.png',
 
-        'text' => '<span class="font-weight-bolder">Madika Klodin Gh</span>',
+        'text' => '<span class="font-weight-bolder">Madika Klodin</span>',
     ],
 
     /*

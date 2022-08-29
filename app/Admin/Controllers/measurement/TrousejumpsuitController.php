@@ -3,15 +3,17 @@
 namespace App\Admin\Controllers\measurement;
 
 use App\Admin\Actions\Mytransaction;
+use App\Admin\Actions\Newrecord;
 use App\Admin\Actions\Pay;
 use App\Admin\Actions\Statusupdate;
+use App\Models\Clients;
 use App\Models\Dressblouseskirt;
 use App\Models\Payment;
-use Encore\Admin\Layout\Content;
 use App\Models\Transaction;
 use App\Models\Trousejumpsuit;
 use Encore\Admin\Form;
 use Encore\Admin\Http\Controllers\AdminController;
+use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
 use Encore\Admin\Table;
 
@@ -35,9 +37,9 @@ class TrousejumpsuitController extends AdminController
         $table->model()->where('measuretype','TrouserJumpsuit');
 
         $table->column('id', __('Id'));
-        $table->column('name', __('Name'));
-        $table->column('adrress', __('Adrress'));
-        $table->column('tel', __('Tel'));
+        $table->column('client.name', __('Name'));
+        $table->column('client.adrress', __('Adrress'));
+        $table->column('client.tel', __('Tel'));
         $table->column('date', __('Date'));
         $table->column('waist', __('Waist'))->hide();
         $table->column('hip', __('Hip'))->hide();
@@ -61,15 +63,17 @@ class TrousejumpsuitController extends AdminController
         }
         });
 
-        $table->column('payment.amountcharge', __('Amount Charge'))
+        $table->column('amountcharge', __('Amount Charge'))
         ->display(function(){
-            return 'GH&cent;'.$this->payment->amountcharge;
+            return 'GH&cent;'.$this->client->payment['amountcharge'];
         });
-        $table->column('payment.amountpaid', __('Amount Paid'))->display(function(){
-            return 'GH&cent;'.$this->payment->amountpaid;
+
+        $table->column('amountpaid', __('Amount Paid'))->display(function(){
+            return 'GH&cent;'.$this->client->payment['amountpaid'];
         });
-        $table->column('payment.amountleft', __('Amount Left'))->display(function(){
-            return 'GH&cent;'.$this->payment->amountleft;
+
+        $table->column('amountleft', __('Amount Left'))->display(function(){
+            return 'GH&cent;'.$this->client->payment['amountleft'];
         });
 
         $table->column('status', __('status'))->hide();
@@ -99,17 +103,17 @@ class TrousejumpsuitController extends AdminController
 
            // $filter->expand();
 
-            $filter->equal('name',__('Search Name'))->select(Trousejumpsuit::select('name','id')
-                ->where('measuretype','TrouserJumpsuit')
-                ->distinct()->pluck('name','name'));
+            $filter->equal('client.name',__('Search Name'))->select(Clients::select('name','id')
+                ->pluck('name','name'));
 
-            $filter->equal('tel',__('Phone'));
+            $filter->equal('client.tel',__('Phone'));
 
         });
 
         $table->actions(function($actions){
             $actions->add(new Statusupdate());
             $actions->add(new Mytransaction());
+            $actions->add(new Newrecord());
             $actions->add(new Pay());
             $actions->disableDelete();
         });
@@ -169,37 +173,39 @@ class TrousejumpsuitController extends AdminController
      */
     protected function form()
     {
-        $form = new Form(new Dressblouseskirt());
+        $form = new Form(new Clients());
 
         $form->tab(__('Measurement'), function ($form) {
-        $form->hidden('measuretype')->value('TrouserJumpsuit');
+        $form->hidden('measurement.measuretype')->value('TrouserJumpsuit');
 
         $form->text('name', __('Name'))->rules('required');
         $form->textarea('adrress', __('Adrress'))->rules('required');
         $form->text('tel', __('Tel'))->rules('required|min:10');
         $form->image('image',__('Customer Image'));
-        $form->date('date', __('Date'))->rules('required');
-        $form->select('measurefor', __('Recording Measurement For'))
+        $form->date('measurement.date', __('Date'))->rules('required');
+        $form->select('measurement.measurefor', __('Recording Measurement For'))
         ->options(['Trouser' => 'Trouser', 'Jumpsuit' => 'Jumpsuit'])->rules('required');
-        $form->text('waist', __('Waist'));
-        $form->text('hip', __('Hip'));
-        $form->text('waisttohip', __('Waist to hip'));
-        $form->text('waisttoknee', __('Waist to knee'));
-        $form->text('waisttocalf', __('Waist to calf'));
-        $form->text('waisttofloor', __('Waist to floor'));
-        $form->text('aroundknee', __('Around knee'));
-        $form->text('thigh', __('Thigh'));
-        $form->text('calf', __('Calf'));
-        $form->text('ankle', __('Ankle'));
-        $form->text('seat', __('Seat'));
-        $form->text('trouserlength', __('Trouser length'));
-        $form->textarea('style', __('Style'));
-        $form->text('typeofmaterial', __('Type of material'));
-        $form->textarea('note', __('Note'));
+        $form->text('measurement.waist', __('Waist'));
+        $form->text('measurement.hip', __('Hip'));
+        $form->text('measurement.waisttohip', __('Waist to hip'));
+        $form->text('measurement.waisttoknee', __('Waist to knee'));
+        $form->text('measurement.waisttocalf', __('Waist to calf'));
+        $form->text('measurement.waisttofloor', __('Waist to floor'));
+        $form->text('measurement.aroundknee', __('Around knee'));
+        $form->text('measurement.thigh', __('Thigh'));
+        $form->text('measurement.calf', __('Calf'));
+        $form->text('measurement.ankle', __('Ankle'));
+        $form->text('measurement.seat', __('Seat'));
+        $form->text('measurement.trouserlength', __('Trouser length'));
+        $form->textarea('measurement.style', __('Style'));
+        $form->text('measurement.typeofmaterial', __('Type of material'));
+        $form->textarea('measurement.note', __('Note'));
 
         })->tab('Payment Information', function ($form){
+
         $form->text('payment.amountcharge', __('Amount Charge'))->rules('required');
-        $form->text('payment.amountpaid', __('Amount Paid'))->rules('required');
+
+        $form->hidden('payment.amountpaid', __('Amount Paid'))->value(0);
         ///$form->hidden('payment.amountleft', __('Amount Paid'));
             
     });
@@ -222,11 +228,12 @@ class TrousejumpsuitController extends AdminController
                 'cat_id' => $id,
                 'amountpaid' => $form->payment['amountpaid'],
                 'amountleft' => $left,
-                'reference' => 'Paying For '.$form->measurefor,
+                'reference' => 'Paying For '.$form->measurement['measurefor'],
                 'pay_id' => $update->id
             ]);
 
-            return Redirect()->to('/admin/print-receipt/'.$id);
+
+            return Redirect()->to('/admin/transactions');
         }
 
 
@@ -240,10 +247,10 @@ class TrousejumpsuitController extends AdminController
             $tr = Transaction::where('pay_id',$update->id)->first();
             $tr->amountpaid = $form->payment['amountpaid'];
             $tr->amountleft = $left;
-            $tr->reference = 'Paying For '.$form->measurefor;
+            $tr->reference = 'Paying For '.$form->measurement['measurefor'];
             $tr->save();
 
-            return Redirect()->to('/admin/print-receipt/'.$id);
+            return Redirect()->to('/admin/transactions');
 
         }
 

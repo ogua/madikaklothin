@@ -25,35 +25,35 @@
 </head>
 <body onload="">
 
-  <div class="container" style="">
+  <div class="container" style="margin-top: 100px;">
 
     <div id="printhere">
       @if($tran)
 
-      <div class="col-md-8 col-md-offset-2" style="position:relative;background-image: url('/images/back-drop.png');">
+      <div class="col-md-8 col-md-offset-2" style="position:relative;background-image: url('/images/back-drop.png');border: 2px solid #ccc;">
         
         <h2 class="text-center">
 
          <img width="100" height="100"src="{{ URL::to('images/software.png') }}"/>
 
-          MADIKA KLODIN GH
+          MADIKA KLODIN
         </h2>
           <p class="text-center" style="margin-top: -25px;">Tel: +(233) 67 087 5055 <br>
-          Location: Madina</p>
+          Location: Teshie</p>
 
           {{-- p class="text-center">XXXX XXX XXX</p> 
           <p class="text-center">sch@email.com</p>  --}}
-          <p class="text-center" style="padding: 10px;font-size: 20px; border: 2px solid #ccc;font-style: bold;">
+          <p class="text-center" style="padding: 10px;font-size: 20px; border: 2px solid #ccc;font-style: bold;background-color: #ccc;">
           OFFICIAL RECEIPT</p>
 
              <ul class="list-inline">
-              <li><b>CUSTOMER NAME:</b> {{ strtoupper(strtoupper($client->name)) }}</li>
+              <li><b>CUSTOMER NAME:</b> {{ strtoupper(strtoupper($client->client->name)) }}</li>
               <li class="pull-right"><b>INVOICE NO:</b> REF-{{$ivoiceid}}</li>
             </ul>
 
             <ul class="list-inline" style="margin-top: -10px;">
               <li><b>SUM OF :</b> {{ strtoupper(strtolower($words))  }} Gh¢ ONLY</li>
-              <li class="pull-right"><b>TRANSACTION DATE:</b> {{$tran->date}}</li>
+              <li class="pull-right"><b>TRANSACTION DATE:</b> {{$client->date}}</li>
             </ul>
 
             <ul class="list-inline" style="margin-top: -10px;">
@@ -134,11 +134,13 @@
   </div>
   <div class="clearfix"></div>
   <div class="col-md-10 col-offset-2">
-   <a href="#" cid="{{$receiptid}}" class="btn btn-success pull-right print">Print</a>
+
+  {{--  <a href="#" cid="{{$receiptid}}" class="btn btn-success pull-right print">Print</a> --}}
 
    {{-- <a href="/admin/make-payment/{{ $client->id }}" class="btn btn-info pull-right" style="margin-right: 30px;">Back</a> --}}
 
-   <a href="/admin" class="btn btn-info pull-right" style="margin-right: 30px;">Back</a>
+   {{-- <a href="/admin" class="btn btn-info pull-right" style="margin-right: 30px;">Back</a> --}}
+
  </div>
 
  @else
@@ -159,6 +161,9 @@
 <script type="text/javascript" src="{{ URL::to('js/jquery.PrintArea.js')}}"></script>
 <script>
   jQuery(document).ready(function() {
+
+
+    window.print();
 
     $(document).on("click",".print",function(e){
       e.preventDefault();

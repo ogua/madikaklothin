@@ -12,7 +12,7 @@
       <select name="searchuser" id="searchuser" class="select2 form-control">
         <option value=""></option>
         @foreach($client as $row)
-           <option value="{{ $row->id }}">{{ $row->name }} - Service Request ({{ $row->measurefor }}) </option>
+           <option value="{{ $row->id }}">{{ $row->name }} - Service Request ({{ $row->measurement->measurefor }}) </option>
         @endforeach
       </select>
     </div>

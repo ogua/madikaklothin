@@ -16,4 +16,9 @@ class Dressblouseskirt extends Model
     {
         return $this->hasOne(Payment::class, 'cat_id');
     }
+
+    public function client()
+    {
+        return $this->belongsto(Clients::class, 'client_id');
+    }
 }
