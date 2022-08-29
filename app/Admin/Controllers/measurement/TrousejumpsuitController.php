@@ -261,4 +261,12 @@ class TrousejumpsuitController extends AdminController
 
         return $form;
     }
+
+
+    public function edit($id, Content $content)
+    {
+        $edit = Dressblouseskirt::where('id',$id)->first();
+        return $content->body($this->form()->edit($edit->client_id));
+    }
+    
 }

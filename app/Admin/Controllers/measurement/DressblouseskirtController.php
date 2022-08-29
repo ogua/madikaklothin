@@ -329,6 +329,13 @@ class DressblouseskirtController extends AdminController
     }
 
 
+    public function edit($id, Content $content)
+    {
+        $edit = Dressblouseskirt::where('id',$id)->first();
+        return $content->body($this->form()->edit($edit->client_id));
+    }
+
+
     public function transactioninfo(Content $content, $id)
     {
         $client = Dressblouseskirt::where('id',$id)->first();
