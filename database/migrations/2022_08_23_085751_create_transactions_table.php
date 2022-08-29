@@ -17,6 +17,7 @@ class CreateTransactionsTable extends Migration
             $table->increments('id');
             $table->string('cat_id')->nullable();
             $table->string('pay_id')->nullable();
+            $table->string('amountcharge')->nullable();
             $table->string('amountpaid')->nullable();
             $table->string('amountleft')->nullable();
             $table->string('reference')->nullable();
